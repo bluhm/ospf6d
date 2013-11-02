@@ -143,6 +143,9 @@ nbr_fsm(struct nbr *nbr, enum nbr_event event)
 		return (0);
 	}
 
+	log_debug("nbr_fsm: event %s for neighbor ID %s on interface %s",
+	    nbr_event_names[event], inet_ntoa(nbr->id), nbr->iface->name);
+
 	switch (nbr_fsm_tbl[i].action) {
 	case NBR_ACT_RST_ITIMER:
 		ret = nbr_act_reset_itimer(nbr);

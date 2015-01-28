@@ -1,4 +1,4 @@
-/*	$OpenBSD: packet.c,v 1.11 2010/12/31 21:22:42 guenther Exp $ */
+/*	$OpenBSD: packet.c,v 1.13 2014/10/25 03:23:49 lteo Exp $ */
 
 /*
  * Copyright (c) 2004, 2005 Esben Norby <norby@openbsd.org>
@@ -21,7 +21,6 @@
 #include <sys/uio.h>
 
 #include <netinet/in.h>
-#include <netinet/in_systm.h>
 #include <netinet/ip.h>
 #include <netinet/ip6.h>
 #include <arpa/inet.h>
@@ -104,7 +103,7 @@ send_packet(struct iface *iface, void *pkt, size_t len,
 			return (-1);
 		}
 
-	if (sendto(iface->fd, pkt, len, MSG_DONTROUTE, (struct sockaddr *)&sa6,
+	if (sendto(iface->fd, pkt, len, 0, (struct sockaddr *)&sa6,
 	    sizeof(sa6)) == -1) {
 		log_warn("send_packet: error sending packet on interface %s",
 		    iface->name);
